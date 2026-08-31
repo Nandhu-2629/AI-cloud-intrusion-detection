@@ -13,6 +13,12 @@ def home():
     return send_from_directory(".", "index.html")
 
 
+# Serve CSS file
+@app.route("/style.css")
+def style():
+    return send_from_directory(".", "style.css")
+
+
 @app.route("/scan")
 def scan():
 
@@ -21,14 +27,12 @@ def scan():
     failed_logins = random.randint(0, 10)
     port_activity = random.randint(0, 10)
 
-
     # AI / ML prediction
     result = detect_intrusion(
         traffic,
         failed_logins,
         port_activity
     )
-
 
     # Determine attack type
     if failed_logins >= 7:
@@ -51,7 +55,6 @@ def scan():
 
         attack = "Normal Network Activity"
 
-
     # Security response
     if result["risk"] == "HIGH":
 
@@ -73,34 +76,33 @@ def scan():
             "Continue monitoring the cloud environment."
         )
 
-
     return jsonify({
 
-    "traffic": traffic,
+        "traffic": traffic,
 
-    "threats": (
-        1 if result["prediction"] != "Normal" else 0
-    ),
+        "threats": (
+            1 if result["prediction"] != "Normal" else 0
+        ),
 
-    "attack": attack,
+        "attack": attack,
 
-    "prediction": result["prediction"],
+        "prediction": result["prediction"],
 
-    "risk": result["risk"],
+        "risk": result["risk"],
 
-    "confidence": result["confidence"],
+        "confidence": result["confidence"],
 
-    "accuracy": result["accuracy"],
+        "accuracy": result["accuracy"],
 
-    "precision": result["precision"],
+        "precision": result["precision"],
 
-    "recall": result["recall"],
+        "recall": result["recall"],
 
-    "f1": result["f1"],
+        "f1": result["f1"],
 
-    "action": action
+        "action": action
 
-})
+    })
 
 
 if __name__ == "__main__":
@@ -113,4 +115,3 @@ if __name__ == "__main__":
         host="0.0.0.0",
         port=port
     )
-    
