@@ -208,33 +208,21 @@ def detect_intrusion(
     )[0]
 
 
-    if prediction_label == "Malicious":
-
+     if prediction_label == "Malicious":
         risk = "HIGH"
 
     elif prediction_label == "Suspicious":
-
         risk = "MEDIUM"
 
     else:
-
         risk = "LOW"
 
-
-   return {
-
-    "prediction": prediction_label,
-
-    "risk": risk,
-
-    "confidence": confidence,
-
-    "accuracy": round(accuracy * 100, 2),
-
-    "precision": round(precision * 100, 2),
-
-    "recall": round(recall * 100, 2),
-
-    "f1": round(f1 * 100, 2)
-
-}
+    return {
+        "prediction": prediction_label,
+        "risk": risk,
+        "confidence": confidence,
+        "accuracy": round(accuracy * 100, 2),
+        "precision": round(precision * 100, 2),
+        "recall": round(recall * 100, 2),
+        "f1": round(f1 * 100, 2)
+    }
