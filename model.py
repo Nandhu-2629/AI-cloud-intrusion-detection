@@ -35,9 +35,31 @@ def train_model():
 
     print("Loading NSL-KDD dataset...")
 
-    data = pd.read_csv(
-        "KDDTrain+.txt",
-        names=columns
+    dataset_path = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    "KDDTrain+.txt"
+)
+
+print("Dataset path:", dataset_path)
+
+if not os.path.exists(dataset_path):
+    raise FileNotFoundError(
+        f"KDDTrain+.txt not found at: {dataset_path}"
+    )
+
+print("Dataset size:", os.path.getsize(dataset_path), "bytes")
+
+data = pd.read_csv(
+    dataset_path,
+    names=columns,
+    header=None
+)
+
+print("Dataset shape:", data.shape)
+
+if data.empty:
+    raise ValueError(
+        "KDDTrain+.txt was found, but it contains no rows."
     )
 
     # Convert attack labels into three categories
