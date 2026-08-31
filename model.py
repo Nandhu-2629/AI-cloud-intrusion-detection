@@ -56,9 +56,7 @@ def train_model():
         else:
             return "Suspicious"
 
-
     data["label"] = data["attack"].apply(classify_attack)
-
 
     # Select useful numerical network features
     features = [
@@ -73,16 +71,13 @@ def train_model():
         "same_srv_rate"
     ]
 
-
     X = data[features]
     y = data["label"]
-
 
     # Convert labels to numbers
     encoder = LabelEncoder()
 
     y = encoder.fit_transform(y)
-
 
     # Split dataset
     X_train, X_test, y_train, y_test = train_test_split(
@@ -93,7 +88,6 @@ def train_model():
         stratify=y
     )
 
-
     # Random Forest ML model
     model = RandomForestClassifier(
         n_estimators=100,
@@ -101,15 +95,12 @@ def train_model():
         n_jobs=-1
     )
 
-
     print("Training Random Forest model...")
 
     model.fit(X_train, y_train)
 
-
     # Test model
     predictions = model.predict(X_test)
-
 
     # Calculate actual performance
     accuracy = accuracy_score(
@@ -138,7 +129,6 @@ def train_model():
         zero_division=0
     )
 
-
     # Save model and encoder
     joblib.dump(
         {
@@ -149,7 +139,6 @@ def train_model():
         MODEL_FILE
     )
 
-
     print("Model trained successfully!")
 
     print("Accuracy:", round(accuracy * 100, 2), "%")
@@ -157,11 +146,12 @@ def train_model():
     print("Recall:", round(recall * 100, 2), "%")
     print("F1 Score:", round(f1 * 100, 2), "%")
 
+    return model, encoder, features, accuracy, precision, recall, f1
 
-return model, encoder, features, accuracy, precision, recall, f1
 
 # Train model when application starts
 model, encoder, features, accuracy, precision, recall, f1 = train_model()
+
 
 def detect_intrusion(
     traffic,
@@ -192,7 +182,6 @@ def detect_intrusion(
 
     }])
 
-
     prediction = model.predict(sample)[0]
 
     probabilities = model.predict_proba(sample)[0]
@@ -202,13 +191,11 @@ def detect_intrusion(
         2
     )
 
-
     prediction_label = encoder.inverse_transform(
         [prediction]
     )[0]
 
-
-       if prediction_label == "Malicious":
+    if prediction_label == "Malicious":
         risk = "HIGH"
 
     elif prediction_label == "Suspicious":
