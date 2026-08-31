@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install flask
+RUN pip install -r requirements.txt
 
 EXPOSE 7860
 
