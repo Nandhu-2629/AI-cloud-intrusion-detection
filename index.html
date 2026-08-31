@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Based Cloud Intrusion Detection System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">☁️ CloudSecure AI</div>
+        <div class="status">
+            <span class="dot"></span> System Online
+        </div>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <div>
+                <p class="tag">CLOUD SECURITY • AI MONITORING</p>
+
+                <h1>
+                    AI-Based Cloud<br>
+                    Intrusion Detection System
+                </h1>
+
+                <p class="description">
+                    An intelligent cloud security system that monitors network
+                    activity and detects suspicious or malicious behavior using
+                    AI-based analysis.
+                </p>
+
+                <button onclick="startScan()">
+                    🔍 Start Security Scan
+                </button>
+            </div>
+
+            <div class="cloud-icon">
+                ☁️
+                <div>
+                    AI CLOUD<br>
+                    SECURITY
+                </div>
+            </div>
+        </section>
+
+
+        <section class="stats">
+
+            <div class="stat-card">
+                <div class="stat-icon">📡</div>
+                <h3>Network Traffic</h3>
+                <strong id="traffic">1,284</strong>
+                <p>Requests monitored</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🛡️</div>
+                <h3>Threats Detected</h3>
+                <strong id="threats">7</strong>
+                <p>Suspicious activities</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🤖</div>
+                <h3>AI Detection</h3>
+                <strong id="accuracy">--%</strong>
+                <p>Detection accuracy</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">☁️</div>
+                <h3>Cloud Status</h3>
+                <strong class="safe">Secure</strong>
+                <p>Infrastructure protected</p>
+            </div>
+
+        </section>
+
+
+        <section class="dashboard">
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    <h2>Live Network Activity</h2>
+                    <span class="live">● LIVE</span>
+                </div>
+
+                <div class="activity">
+
+                    <div class="activity-row">
+                        <span>10:42:31</span>
+                        <span>192.168.1.24</span>
+                        <span>HTTPS Request</span>
+                        <span class="normal">Normal</span>
+                    </div>
+
+                    <div class="activity-row">
+                        <span>10:42:35</span>
+                        <span>172.16.0.18</span>
+                        <span>SSH Connection</span>
+                        <span class="warning">Suspicious</span>
+                    </div>
+
+                    <div class="activity-row">
+                        <span>10:42:41</span>
+                        <span>10.0.0.52</span>
+                        <span>Database Access</span>
+                        <span class="normal">Normal</span>
+                    </div>
+
+                    <div class="activity-row">
+                        <span>10:42:48</span>
+                        <span>192.168.1.91</span>
+                        <span>Port Scan</span>
+                        <span class="danger">Threat</span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="panel">
+
+                <h2>AI Threat Analysis</h2>
+
+                <div class="threat">
+
+                    <div class="threat-top">
+                        <span>⚠️ Brute Force Attempt</span>
+                        <span class="high">HIGH</span>
+                    </div>
+
+                    <p>
+                        Multiple failed login attempts detected.
+                    </p>
+
+                </div>
+
+
+                <div class="threat">
+
+                    <div class="threat-top">
+                        <span>🔴 Port Scanning</span>
+                        <span class="medium">MEDIUM</span>
+                    </div>
+
+                    <p>
+                        Unusual port scanning activity identified.
+                    </p>
+
+                </div>
+
+
+                <div class="threat safe-threat">
+
+                    <div class="threat-top">
+                        <span>✅ Malicious Traffic</span>
+                        <span class="low">BLOCKED</span>
+                    </div>
+
+                    <p>
+                        Suspicious traffic automatically blocked.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="architecture">
+
+            <h2>Cloud Intrusion Detection Architecture</h2>
+
+            <div class="architecture-flow">
+
+                <div class="architecture-box">
+                    <span>🌐</span>
+                    <b>Internet</b>
+                    <small>Network Traffic</small>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="architecture-box">
+                    <span>☁️</span>
+                    <b>Cloud Infrastructure</b>
+                    <small>Cloud Resources</small>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="architecture-box">
+                    <span>📊</span>
+                    <b>Traffic Monitoring</b>
+                    <small>Log Collection</small>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="architecture-box ai-box">
+                    <span>🤖</span>
+                    <b>AI Detection</b>
+                    <small>Threat Classification</small>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="architecture-box">
+                    <span>🛡️</span>
+                    <b>Security Response</b>
+                    <small>Alert / Block</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="scan-section">
+
+            <h2>Security Scanner</h2>
+
+            <p id="scanMessage">
+                Click the button below to analyze current cloud traffic.
+            </p>
+
+            <button onclick="startScan()">
+                Run AI Threat Detection
+            </button>
+
+            <div class="progress-container">
+                <div id="progress"></div>
+            </div>
+
+
+            <div id="scanReport"
+                style="
+                display:none;
+                margin-top:25px;
+                padding:20px;
+                border-radius:12px;
+                background:#101f35;
+                border:1px solid #24527a;
+                ">
+
+                <h3>🛡️ Security Scan Report</h3>
+
+                <p>
+                    <strong>Scan Status:</strong>
+                    <span id="reportStatus">Completed</span>
+                </p>
+
+                <p>
+                    <strong>Attack Detected:</strong>
+                    <span id="reportAttack">None</span>
+                </p>
+
+                <p>
+                    <strong>Network Traffic Analyzed:</strong>
+                    <span id="reportTraffic">0</span> requests
+                </p>
+
+                <p>
+                    <strong>Threats Detected:</strong>
+                    <span id="reportThreats">0</span>
+                </p>
+
+                <p>
+                    <strong>Risk Level:</strong>
+                    <span id="reportRisk">LOW</span>
+                </p>
+
+                <p>
+                    <strong>AI Analysis:</strong>
+                    Suspicious network activity analyzed successfully.
+                </p>
+
+                <p>
+                    <strong>Recommended Action:</strong>
+                    <span id="reportAction">
+                        Continue monitoring the cloud environment.
+                    </span>
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            AI-Based Cloud Intrusion Detection System
+        </p>
+
+        <p>
+            Cloud Computing Project • AI-Powered Security Monitoring
+        </p>
+
+    </footer>
+
+
+<script>
+
+function startScan() {
+
+    const progress =
+        document.getElementById("progress");
+
+    const message =
+        document.getElementById("scanMessage");
+
+    const threats =
+        document.getElementById("threats");
+
+    const traffic =
+        document.getElementById("traffic");
+
+    const accuracy =
+        document.getElementById("accuracy");
+
+    const scanReport =
+        document.getElementById("scanReport");
+
+    const reportTraffic =
+        document.getElementById("reportTraffic");
+
+    const reportThreats =
+        document.getElementById("reportThreats");
+
+    const reportAttack =
+        document.getElementById("reportAttack");
+
+    const reportRisk =
+        document.getElementById("reportRisk");
+
+    const reportAction =
+        document.getElementById("reportAction");
+
+
+    message.innerHTML =
+        "🤖 AI is analyzing cloud network traffic...";
+
+    progress.style.width = "0%";
+
+    scanReport.style.display = "none";
+
+
+    let value = 0;
+
+
+    const scan = setInterval(function () {
+
+        value += 10;
+
+        progress.style.width =
+            value + "%";
+
+
+        if (value >= 100) {
+
+            clearInterval(scan);
+
+
+            // Connect to Flask backend
+            fetch("/scan")
+
+                .then(response => {
+
+                    if (!response.ok) {
+                        throw new Error("Server error");
+                    }
+
+                    return response.json();
+
+                })
+
+                .then(data => {
+
+
+                    // Update dashboard
+                    traffic.innerHTML =
+                        data.traffic;
+
+                    threats.innerHTML =
+                        data.threats;
+
+
+                    accuracy.innerHTML =
+                        data.accuracy + "%";
+
+
+                    // Update scan message
+                    message.innerHTML =
+                        "✅ Scan completed. AI detected: " +
+                        data.attack + ".";
+
+
+                    // Update security report
+                    reportTraffic.innerHTML =
+                        data.traffic;
+
+                    reportThreats.innerHTML =
+                        data.threats;
+
+                    reportAttack.innerHTML =
+                        data.attack;
+
+                    reportRisk.innerHTML =
+                        data.risk;
+
+                    reportAction.innerHTML =
+                        data.action;
+
+
+                    // Show report
+                    scanReport.style.display =
+                        "block";
+
+                })
+
+                .catch(error => {
+
+                    console.error(error);
+
+                    message.innerHTML =
+                        "❌ Unable to connect to AI security backend.";
+
+                });
+
+        }
+
+    }, 150);
+
+}
+
+</script>
+
+
+</body>
+</html>
