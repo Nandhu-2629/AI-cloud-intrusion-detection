@@ -35,32 +35,38 @@ def train_model():
 
     print("Loading NSL-KDD dataset...")
 
+    # Get the dataset from the same folder as model.py
     dataset_path = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
-    "KDDTrain+.txt"
-)
-
-print("Dataset path:", dataset_path)
-
-if not os.path.exists(dataset_path):
-    raise FileNotFoundError(
-        f"KDDTrain+.txt not found at: {dataset_path}"
+        os.path.dirname(os.path.abspath(__file__)),
+        "KDDTrain+.txt"
     )
 
-print("Dataset size:", os.path.getsize(dataset_path), "bytes")
+    print("Dataset path:", dataset_path)
 
-data = pd.read_csv(
-    dataset_path,
-    names=columns,
-    header=None
-)
+    if not os.path.exists(dataset_path):
+        raise FileNotFoundError(
+            "KDDTrain+.txt not found!"
+        )
 
-print("Dataset shape:", data.shape)
-
-if data.empty:
-    raise ValueError(
-        "KDDTrain+.txt was found, but it contains no rows."
+    print(
+        "Dataset size:",
+        os.path.getsize(dataset_path),
+        "bytes"
     )
+
+    data = pd.read_csv(
+        dataset_path,
+        names=columns,
+        header=None
+    )
+
+    print("Dataset shape:", data.shape)
+
+    if data.empty:
+        raise ValueError(
+            "KDDTrain+.txt was found but contains no data."
+        )
+
 
     # Convert attack labels into three categories
     def classify_attack(attack):
@@ -69,16 +75,25 @@ if data.empty:
             return "Normal"
 
         elif attack in [
-            "neptune", "smurf", "pod", "teardrop",
-            "back", "land", "apache2", "udpstorm",
-            "processtable", "mailbomb"
+            "neptune",
+            "smurf",
+            "pod",
+            "teardrop",
+            "back",
+            "land",
+            "apache2",
+            "udpstorm",
+            "processtable",
+            "mailbomb"
         ]:
             return "Malicious"
 
         else:
             return "Suspicious"
 
+
     data["label"] = data["attack"].apply(classify_attack)
+
 
     # Select useful numerical network features
     features = [
@@ -93,13 +108,16 @@ if data.empty:
         "same_srv_rate"
     ]
 
+
     X = data[features]
     y = data["label"]
+
 
     # Convert labels to numbers
     encoder = LabelEncoder()
 
     y = encoder.fit_transform(y)
+
 
     # Split dataset
     X_train, X_test, y_train, y_test = train_test_split(
@@ -110,6 +128,7 @@ if data.empty:
         stratify=y
     )
 
+
     # Random Forest ML model
     model = RandomForestClassifier(
         n_estimators=100,
@@ -117,14 +136,20 @@ if data.empty:
         n_jobs=-1
     )
 
+
     print("Training Random Forest model...")
 
-    model.fit(X_train, y_train)
+    model.fit(
+        X_train,
+        y_train
+    )
+
 
     # Test model
     predictions = model.predict(X_test)
 
-    # Calculate actual performance
+
+    # Calculate performance
     accuracy = accuracy_score(
         y_test,
         predictions
@@ -151,6 +176,7 @@ if data.empty:
         zero_division=0
     )
 
+
     # Save model and encoder
     joblib.dump(
         {
@@ -161,18 +187,57 @@ if data.empty:
         MODEL_FILE
     )
 
+
     print("Model trained successfully!")
 
-    print("Accuracy:", round(accuracy * 100, 2), "%")
-    print("Precision:", round(precision * 100, 2), "%")
-    print("Recall:", round(recall * 100, 2), "%")
-    print("F1 Score:", round(f1 * 100, 2), "%")
+    print(
+        "Accuracy:",
+        round(accuracy * 100, 2),
+        "%"
+    )
 
-    return model, encoder, features, accuracy, precision, recall, f1
+    print(
+        "Precision:",
+        round(precision * 100, 2),
+        "%"
+    )
+
+    print(
+        "Recall:",
+        round(recall * 100, 2),
+        "%"
+    )
+
+    print(
+        "F1 Score:",
+        round(f1 * 100, 2),
+        "%"
+    )
+
+
+    # IMPORTANT:
+    # This return belongs INSIDE train_model()
+    return (
+        model,
+        encoder,
+        features,
+        accuracy,
+        precision,
+        recall,
+        f1
+    )
 
 
 # Train model when application starts
-model, encoder, features, accuracy, precision, recall, f1 = train_model()
+(
+    model,
+    encoder,
+    features,
+    accuracy,
+    precision,
+    recall,
+    f1
+) = train_model()
 
 
 def detect_intrusion(
@@ -204,28 +269,43 @@ def detect_intrusion(
 
     }])
 
+
+    # Make prediction
     prediction = model.predict(sample)[0]
 
+
+    # Get prediction probabilities
     probabilities = model.predict_proba(sample)[0]
 
+
+    # Calculate confidence
     confidence = round(
         max(probabilities) * 100,
         2
     )
 
+
+    # Convert numerical prediction back to label
     prediction_label = encoder.inverse_transform(
         [prediction]
     )[0]
 
+
+    # Determine risk level
     if prediction_label == "Malicious":
+
         risk = "HIGH"
 
     elif prediction_label == "Suspicious":
+
         risk = "MEDIUM"
 
     else:
+
         risk = "LOW"
 
+
+    # Return result
     return {
         "prediction": prediction_label,
         "risk": risk,
