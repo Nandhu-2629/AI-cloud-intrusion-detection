@@ -208,7 +208,7 @@ def detect_intrusion(
     )[0]
 
 
-     if prediction_label == "Malicious":
+       if prediction_label == "Malicious":
         risk = "HIGH"
 
     elif prediction_label == "Suspicious":
