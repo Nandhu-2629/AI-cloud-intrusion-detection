@@ -394,19 +394,14 @@ def history():
 # START APPLICATION
 # --------------------------------------------------
 
+# Initialize database when application starts
+try:
+    initialize_database()
+except Exception as error:
+    print("Database initialization error:", error)
+
+
 if __name__ == "__main__":
-
-    try:
-
-        initialize_database()
-
-    except Exception as error:
-
-        print(
-            "Database initialization error:",
-            error
-        )
-
 
     port = int(
         os.environ.get(
@@ -415,11 +410,7 @@ if __name__ == "__main__":
         )
     )
 
-
     app.run(
-
         host="0.0.0.0",
-
         port=port
-
     )
