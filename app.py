@@ -15,6 +15,10 @@ def get_db_connection():
     if not database_url:
         raise Exception("DATABASE_URL is not configured")
 
+    # Render external PostgreSQL connections require SSL
+    if "sslmode=" not in database_url:
+        database_url += "?sslmode=require"
+
     return psycopg2.connect(database_url)
 
 
@@ -158,7 +162,8 @@ def scan():
         database_status = "Saved to PostgreSQL"
 
     except Exception as error:
-        print("Database error:", error)
+    print("DATABASE ERROR:", repr(error))
+    database_status = "Database save failed: " + str(error)
 
     # SEND RESULT
     return jsonify({
