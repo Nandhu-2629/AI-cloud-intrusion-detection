@@ -161,9 +161,9 @@ def scan():
 
         database_status = "Saved to PostgreSQL"
 
-    except Exception as error:
-    print("DATABASE ERROR:", repr(error))
-    database_status = "Database save failed: " + str(error)
+       except Exception as error:
+            print("DATABASE ERROR:", repr(error))
+            database_status = "Database save failed: " + str(error)
 
     # SEND RESULT
     return jsonify({
