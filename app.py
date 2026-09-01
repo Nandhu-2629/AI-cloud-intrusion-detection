@@ -20,10 +20,10 @@ def get_db_connection():
     if not database_url:
         raise Exception("DATABASE_URL is not configured")
 
-    return psycopg2.connect(
-        database_url,
-        sslmode="require"
-    )
+    if "sslmode=" not in database_url:
+        database_url += "?sslmode=require"
+
+    return psycopg2.connect(database_url)
 
 
 # ==================================================
@@ -107,101 +107,73 @@ def style():
 # AI SECURITY SCAN
 # ==================================================
 
+# AI SECURITY SCAN
 @app.route("/scan")
 def scan():
 
-    # Generate simulated cloud traffic
-
-    traffic = random.randint(
-        1000,
-        2000
-    )
-
-    failed_logins = random.randint(
-        0,
-        10
-    )
-
-    port_activity = random.randint(
-        0,
-        10
-    )
-
+    # Simulated cloud network data
+    traffic = random.randint(1000, 2000)
+    failed_logins = random.randint(0, 10)
+    port_activity = random.randint(0, 10)
 
     # AI / ML prediction
-
     result = detect_intrusion(
         traffic,
         failed_logins,
         port_activity
     )
 
-
-    # ==================================================
-    # DETERMINE ATTACK TYPE
-    # ==================================================
-
+    # Determine attack type
     if failed_logins >= 7:
-
         attack = "Brute Force Attack"
 
     elif port_activity >= 7:
-
         attack = "Port Scanning"
 
     elif traffic >= 1700:
-
         attack = "DDoS Traffic"
 
     elif result["prediction"] == "Suspicious":
-
         attack = "Suspicious Network Activity"
 
     else:
-
         attack = "Normal Network Activity"
 
-
-    # ==================================================
-    # SECURITY RESPONSE
-    # ==================================================
-
+    # Security response
     if result["risk"] == "HIGH":
-
         action = (
             "Block suspicious traffic and investigate "
             "affected cloud resources."
         )
 
     elif result["risk"] == "MEDIUM":
-
         action = (
             "Monitor suspicious activity and review "
             "cloud security logs."
         )
 
     else:
-
         action = (
             "Continue monitoring the cloud environment."
         )
 
+    # Convert ML values to normal Python floats
+    confidence = float(result["confidence"])
+    accuracy = float(result["accuracy"])
+    precision = float(result["precision"])
+    recall = float(result["recall"])
+    f1 = float(result["f1"])
 
-    # ==================================================
     # SAVE RESULT TO POSTGRESQL
-    # ==================================================
-
     database_status = "Database save failed"
 
     try:
 
         connection = get_db_connection()
-
         cursor = connection.cursor()
 
-        cursor.execute("""
+        sql = """
             INSERT INTO scan_results (
-
                 traffic,
                 failed_logins,
                 port_activity,
@@ -214,80 +186,46 @@ def scan():
                 recall,
                 f1_score,
                 action
-
             )
-
             VALUES (
-
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s
-
+                %s, %s, %s, %s, %s, %s,
+                %s, %s, %s, %s, %s, %s
             )
-        """, (
+        """
 
-            traffic,
+        values = (
+            int(traffic),
+            int(failed_logins),
+            int(port_activity),
+            str(attack),
+            str(result["prediction"]),
+            str(result["risk"]),
+            confidence,
+            accuracy,
+            precision,
+            recall,
+            f1,
+            str(action)
+        )
 
-            failed_logins,
-
-            port_activity,
-
-            attack,
-
-            result["prediction"],
-
-            result["risk"],
-
-            result["confidence"],
-
-            result["accuracy"],
-
-            result["precision"],
-
-            result["recall"],
-
-            result["f1"],
-
-            action
-
-        ))
-
+        cursor.execute(sql, values)
 
         connection.commit()
 
         cursor.close()
-
         connection.close()
 
         database_status = "Saved to PostgreSQL"
 
+        print("SCAN RESULT SAVED SUCCESSFULLY")
 
     except Exception as error:
 
-        print(
-            "DATABASE ERROR:",
-            repr(error)
-        )
+        print("DATABASE ERROR:", repr(error))
 
-        database_status = (
-            "Database save failed: "
-            + str(error)
-        )
+        database_status = "Database save failed: " + str(error)
 
-
-    # ==================================================
-    # SEND SCAN RESULT
-    # ==================================================
-
+    # SEND RESULT TO DASHBOARD
     return jsonify({
 
         "traffic": traffic,
@@ -297,9 +235,7 @@ def scan():
         "port_activity": port_activity,
 
         "threats": (
-            1
-            if result["prediction"] != "Normal"
-            else 0
+            1 if result["prediction"] != "Normal" else 0
         ),
 
         "attack": attack,
@@ -308,22 +244,21 @@ def scan():
 
         "risk": result["risk"],
 
-        "confidence": result["confidence"],
+        "confidence": confidence,
 
-        "accuracy": result["accuracy"],
+        "accuracy": accuracy,
 
-        "precision": result["precision"],
+        "precision": precision,
 
-        "recall": result["recall"],
+        "recall": recall,
 
-        "f1": result["f1"],
+        "f1": f1,
 
         "action": action,
 
         "database": database_status
 
     })
-
 
 # ==================================================
 # VIEW SCAN HISTORY
