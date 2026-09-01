@@ -188,92 +188,62 @@ def scan():
     # SAVE SCAN RESULT TO POSTGRESQL
     # --------------------------------------------------
 
-    try:
+  try:
 
-        connection = get_db_connection()
+    connection = get_db_connection()
+    cursor = connection.cursor()
 
-        cursor = connection.cursor()
-
-        cursor.execute("""
-            INSERT INTO scan_results (
-
-                traffic,
-                failed_logins,
-                port_activity,
-                attack,
-                prediction,
-                risk,
-                confidence,
-                accuracy,
-                precision_score,
-                recall,
-                f1_score,
-                action
-
-            )
-
-            VALUES (
-
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s
-
-            )
-        """, (
-
+    cursor.execute("""
+        INSERT INTO scan_results (
             traffic,
-
             failed_logins,
-
             port_activity,
-
             attack,
-
-            result["prediction"],
-
-            result["risk"],
-
-            result["confidence"],
-
-            result["accuracy"],
-
-            result["precision"],
-
-            result["recall"],
-
-            result["f1"],
-
+            prediction,
+            risk,
+            confidence,
+            accuracy,
+            precision_score,
+            recall,
+            f1_score,
             action
-
-        ))
-
-
-        connection.commit()
-
-        cursor.close()
-
-        connection.close()
-
-        database_status = "Saved to PostgreSQL"
-
-    except Exception as error:
-
-        print(
-            "Database error:",
-            error
         )
+        VALUES (
+            %s, %s, %s, %s, %s, %s,
+            %s, %s, %s, %s, %s, %s
+        )
+    """, (
+        int(traffic),
+        int(failed_logins),
+        int(port_activity),
+        str(attack),
+        str(result["prediction"]),
+        str(result["risk"]),
+        float(result["confidence"]),
+        float(result["accuracy"]),
+        float(result["precision"]),
+        float(result["recall"]),
+        float(result["f1"]),
+        str(action)
+    ))
 
-        database_status = "Database save failed"
+    connection.commit()
 
+    cursor.close()
+    connection.close()
+
+    database_status = "Saved to PostgreSQL"
+
+except Exception as error:
+
+    print("DATABASE ERROR:", repr(error))
+
+    try:
+        connection.rollback()
+    except:
+        pass
+
+    database_status = "Database save failed"
 
     # --------------------------------------------------
     # SEND RESULT TO DASHBOARD
