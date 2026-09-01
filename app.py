@@ -183,53 +183,43 @@ def scan():
 
         cursor = connection.cursor()
 
-        cursor.execute("""
-            INSERT INTO scan_results
-            (
-                traffic,
-                failed_logins,
-                port_activity,
-                attack,
-                prediction,
-                risk,
-                confidence,
-                accuracy,
-                precision_score,
-                recall,
-                f1_score,
-                action
-            )
-            VALUES
-            (
-                %s, %s, %s, %s, %s, %s,
-                %s, %s, %s, %s, %s, %s
-            )
-        """, (
+       cursor.execute("""
+    INSERT INTO scan_results
+    (
+        traffic,
+        failed_logins,
+        port_activity,
+        attack,
+        prediction,
+        risk,
+        confidence,
+        accuracy,
+        precision_score,
+        recall,
+        f1_score,
+        action
+    )
+    VALUES
+    (
+        %s, %s, %s, %s, %s, %s,
+        %s, %s, %s, %s, %s, %s
+    )
+""", (
 
-            traffic,
+    int(traffic),
+    int(failed_logins),
+    int(port_activity),
+    str(attack),
+    str(result["prediction"]),
+    str(result["risk"]),
+    float(result["confidence"]),
+    float(result["accuracy"]),
+    float(result["precision"]),
+    float(result["recall"]),
+    float(result["f1"]),
+    str(action)
 
-            failed_logins,
-
-            port_activity,
-
-            attack,
-
-            result["prediction"],
-
-            result["risk"],
-
-            result["confidence"],
-
-            result["accuracy"],
-
-            result["precision"],
-
-            result["recall"],
-
-            result["f1"],
-
-            action
-        ))
+))
 
 
         connection.commit()
