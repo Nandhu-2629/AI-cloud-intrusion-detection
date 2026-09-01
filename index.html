@@ -235,6 +235,10 @@
                 Run AI Threat Detection
             </button>
 
+            <button onclick="viewHistory()">
+    View Scan History
+</button>
+
             <div class="progress-container">
                 <div id="progress"></div>
             </div>
@@ -444,7 +448,11 @@ function startScan() {
 }
 
 </script>
-
+<script>
+async function viewHistory() {
+    window.location.href = "/history";
+}
+</script>
 
 </body>
 </html>
