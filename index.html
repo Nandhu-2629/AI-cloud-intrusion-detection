@@ -807,7 +807,13 @@ async function loadTrafficStatistics() {
         trafficElement.textContent =
             data.traffic ?? 0;
 
+const threatsElement =
+    document.getElementById("threats");
 
+if (threatsElement) {
+    threatsElement.textContent =
+        data.threats ?? 0;
+}
     }
 
     catch (error) {

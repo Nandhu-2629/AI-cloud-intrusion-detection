@@ -957,6 +957,12 @@ def traffic():
 
     features = calculate_traffic_features()
 
+    # Current suspicious activity in the same 60-second window
+    # used by the traffic statistics.
+    current_threats = features["port_activity"]
+
+    features["threats"] = int(current_threats)
+
     return jsonify(features)
 
 
@@ -997,6 +1003,7 @@ def traffic_logs_api():
                 path,
                 response_status
             FROM traffic_logs
+            WHERE created_at >= CURRENT_TIMESTAMP - INTERVAL '60 seconds'
             ORDER BY created_at DESC
             LIMIT 10
         """)
