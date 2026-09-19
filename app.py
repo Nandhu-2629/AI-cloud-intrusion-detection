@@ -226,10 +226,10 @@ def save_request(response):
 def save_request(response):
 
     try:
-                # Ignore internal dashboard/API requests
+
         if is_internal_monitoring_path(request.path):
             return response
-            
+
         source_ip = request.headers.get(
             "X-Forwarded-For",
             request.remote_addr
@@ -243,28 +243,21 @@ def save_request(response):
                 .strip()
             )
 
-
         # Save actual request to PostgreSQL
 
         connection = get_db_connection()
 
         cursor = connection.cursor()
 
-
         cursor.execute("""
 
             INSERT INTO traffic_logs (
 
                 source_ip,
-
                 method,
-
                 path,
-
                 user_agent,
-
                 request_size,
-
                 response_status
 
             )
@@ -290,13 +283,11 @@ def save_request(response):
 
         ))
 
-
         connection.commit()
 
         cursor.close()
 
         connection.close()
-
 
     except Exception as error:
 
@@ -304,7 +295,6 @@ def save_request(response):
             "Traffic logging error:",
             repr(error)
         )
-
 
     return response
 
