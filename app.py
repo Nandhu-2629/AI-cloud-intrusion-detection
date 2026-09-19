@@ -1,12 +1,19 @@
+<<<<<<< HEAD
 from flask import Flask, jsonify, send_from_directory, request
 import os
 import time
 from collections import defaultdict
+=======
+from flask import Flask, jsonify, send_from_directory
+import random
+import os
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
 import psycopg2
 
 from model import detect_intrusion
 
 
+<<<<<<< HEAD
 app = Flask(
     __name__,
     static_folder="."
@@ -22,6 +29,9 @@ traffic_logs = []
 request_counts = defaultdict(int)
 
 failed_request_counts = defaultdict(int)
+=======
+app = Flask(__name__, static_folder=".")
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
 
 
 # ==================================================
@@ -30,6 +40,7 @@ failed_request_counts = defaultdict(int)
 
 def get_db_connection():
 
+<<<<<<< HEAD
     database_url = os.environ.get(
         "DATABASE_URL"
     )
@@ -56,11 +67,27 @@ def get_db_connection():
 
 # ==================================================
 # CREATE DATABASE TABLES
+=======
+    database_url = os.environ.get("DATABASE_URL")
+
+    if not database_url:
+        raise Exception("DATABASE_URL is not configured")
+
+    if "sslmode=" not in database_url:
+        database_url += "?sslmode=require"
+
+    return psycopg2.connect(database_url)
+
+
+# ==================================================
+# CREATE DATABASE TABLE
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
 # ==================================================
 
 def initialize_database():
 
     connection = get_db_connection()
+<<<<<<< HEAD
 
     cursor = connection.cursor()
 
@@ -69,6 +96,10 @@ def initialize_database():
     # SCAN RESULTS
     # ----------------------------------------------
 
+=======
+    cursor = connection.cursor()
+
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS scan_results (
 
@@ -103,6 +134,7 @@ def initialize_database():
         )
     """)
 
+<<<<<<< HEAD
 
     # ----------------------------------------------
     # REAL TRAFFIC LOGS
@@ -321,6 +353,14 @@ def save_request(response):
 
 
     return response
+=======
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+
+    print("PostgreSQL database initialized successfully!")
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
 
 
 # ==================================================
@@ -350,6 +390,7 @@ def style():
 
 
 # ==================================================
+<<<<<<< HEAD
 # REAL TRAFFIC STATISTICS
 # ==================================================
 
@@ -642,12 +683,15 @@ def calculate_traffic_features():
 
 
 # ==================================================
+=======
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
 # AI SECURITY SCAN
 # ==================================================
 
 @app.route("/scan")
 def scan():
 
+<<<<<<< HEAD
     # ----------------------------------------------
     # Get REAL traffic features
     # ----------------------------------------------
@@ -679,6 +723,32 @@ def scan():
 
         features["same_srv_rate"]
 
+=======
+    # Simulated cloud network data
+
+    traffic = random.randint(
+        1000,
+        2000
+    )
+
+    failed_logins = random.randint(
+        0,
+        10
+    )
+
+    port_activity = random.randint(
+        0,
+        10
+    )
+
+
+    # AI / ML prediction
+
+    result = detect_intrusion(
+        traffic,
+        failed_logins,
+        port_activity
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
     )
 
 
@@ -686,6 +756,7 @@ def scan():
     # DETERMINE ATTACK TYPE
     # ==================================================
 
+<<<<<<< HEAD
     if features["failed_logins"] >= 7:
 
         attack = (
@@ -721,6 +792,27 @@ def scan():
         attack = (
             "Normal Network Activity"
         )
+=======
+    if failed_logins >= 7:
+
+        attack = "Brute Force Attack"
+
+    elif port_activity >= 7:
+
+        attack = "Port Scanning"
+
+    elif traffic >= 1700:
+
+        attack = "DDoS Traffic"
+
+    elif result["prediction"] == "Suspicious":
+
+        attack = "Suspicious Network Activity"
+
+    else:
+
+        attack = "Normal Network Activity"
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
 
 
     # ==================================================
@@ -730,31 +822,46 @@ def scan():
     if result["risk"] == "HIGH":
 
         action = (
+<<<<<<< HEAD
 
             "Block suspicious traffic and "
             "investigate affected cloud resources."
 
+=======
+            "Block suspicious traffic and investigate "
+            "affected cloud resources."
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         )
 
     elif result["risk"] == "MEDIUM":
 
         action = (
+<<<<<<< HEAD
 
             "Monitor suspicious activity and "
             "review cloud security logs."
 
+=======
+            "Monitor suspicious activity and review "
+            "cloud security logs."
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         )
 
     else:
 
         action = (
+<<<<<<< HEAD
 
             "Continue monitoring the cloud environment."
 
+=======
+            "Continue monitoring the cloud environment."
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         )
 
 
     # ==================================================
+<<<<<<< HEAD
     # CONVERT ML VALUES
     # ==================================================
 
@@ -787,6 +894,23 @@ def scan():
         "Database save failed"
     )
 
+=======
+    # CONVERT ML VALUES TO PYTHON FLOAT
+    # ==================================================
+
+    confidence = float(result["confidence"])
+    accuracy = float(result["accuracy"])
+    precision = float(result["precision"])
+    recall = float(result["recall"])
+    f1 = float(result["f1"])
+
+
+    # ==================================================
+    # SAVE RESULT TO POSTGRESQL
+    # ==================================================
+
+    database_status = "Database save failed"
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
 
     try:
 
@@ -796,7 +920,10 @@ def scan():
 
 
         sql = """
+<<<<<<< HEAD
 
+=======
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
             INSERT INTO scan_results (
 
                 traffic,
@@ -827,16 +954,45 @@ def scan():
 
             VALUES (
 
+<<<<<<< HEAD
                 %s, %s, %s, %s, %s, %s,
                 %s, %s, %s, %s, %s, %s
 
             )
 
+=======
+                %s,
+
+                %s,
+
+                %s,
+
+                %s,
+
+                %s,
+
+                %s,
+
+                %s,
+
+                %s,
+
+                %s,
+
+                %s,
+
+                %s,
+
+                %s
+
+            )
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         """
 
 
         values = (
 
+<<<<<<< HEAD
             int(
                 features["traffic"]
             ),
@@ -858,6 +1014,19 @@ def scan():
             str(
                 result["risk"]
             ),
+=======
+            int(traffic),
+
+            int(failed_logins),
+
+            int(port_activity),
+
+            str(attack),
+
+            str(result["prediction"]),
+
+            str(result["risk"]),
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
 
             confidence,
 
@@ -882,14 +1051,22 @@ def scan():
 
         connection.commit()
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         cursor.close()
 
         connection.close()
 
 
+<<<<<<< HEAD
         database_status = (
             "Saved to PostgreSQL"
         )
+=======
+        database_status = "Saved to PostgreSQL"
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
 
 
         print(
@@ -904,21 +1081,32 @@ def scan():
             repr(error)
         )
 
+<<<<<<< HEAD
 
         database_status = (
 
             "Database save failed: "
             + str(error)
 
+=======
+        database_status = (
+            "Database save failed: "
+            + str(error)
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         )
 
 
     # ==================================================
+<<<<<<< HEAD
     # SEND RESULT TO DASHBOARD
+=======
+    # SEND RESULT
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
     # ==================================================
 
     return jsonify({
 
+<<<<<<< HEAD
         "traffic":
             features["traffic"],
 
@@ -970,11 +1158,45 @@ def scan():
 
         "traffic_source":
             "Real application traffic"
+=======
+        "traffic": traffic,
+
+        "failed_logins": failed_logins,
+
+        "port_activity": port_activity,
+
+        "threats": (
+            1
+            if result["prediction"] != "Normal"
+            else 0
+        ),
+
+        "attack": attack,
+
+        "prediction": result["prediction"],
+
+        "risk": result["risk"],
+
+        "confidence": confidence,
+
+        "accuracy": accuracy,
+
+        "precision": precision,
+
+        "recall": recall,
+
+        "f1": f1,
+
+        "action": action,
+
+        "database": database_status
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
 
     })
 
 
 # ==================================================
+<<<<<<< HEAD
 # TRAFFIC API
 # ==================================================
 
@@ -1097,6 +1319,8 @@ def traffic_logs_api():
 
 
 # ==================================================
+=======
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
 # SCAN HISTORY
 # ==================================================
 
@@ -1111,7 +1335,10 @@ def history():
 
 
         cursor.execute("""
+<<<<<<< HEAD
 
+=======
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
             SELECT
 
                 id,
@@ -1137,7 +1364,10 @@ def history():
             ORDER BY created_at DESC
 
             LIMIT 20
+<<<<<<< HEAD
 
+=======
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         """)
 
 
@@ -1149,6 +1379,13 @@ def history():
         connection.close()
 
 
+<<<<<<< HEAD
+=======
+        # ------------------------------------------
+        # CREATE TABLE ROWS
+        # ------------------------------------------
+
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         table_rows = ""
 
 
@@ -1160,7 +1397,10 @@ def history():
 
 
             table_rows += f"""
+<<<<<<< HEAD
 
+=======
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
             <tr>
 
                 <td>{row[0]}</td>
@@ -1179,6 +1419,7 @@ def history():
                     {row[6]}
                 </td>
 
+<<<<<<< HEAD
                 <td>
                     {float(row[7]):.2f}%
                 </td>
@@ -1209,6 +1450,38 @@ def history():
 
         html = f"""
 
+=======
+                <td>{float(row[7]):.2f}%</td>
+
+                <td>{row[8]}</td>
+
+            </tr>
+            """
+
+
+        # ------------------------------------------
+        # IF NO RECORDS
+        # ------------------------------------------
+
+        if not rows:
+
+            table_rows = """
+            <tr>
+
+                <td colspan="9">
+                    No scan records available yet.
+                </td>
+
+            </tr>
+            """
+
+
+        # ------------------------------------------
+        # HISTORY PAGE
+        # ------------------------------------------
+
+        html = f"""
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         <!DOCTYPE html>
 
         <html lang="en">
@@ -1234,15 +1507,30 @@ def history():
                     box-sizing: border-box;
                 }}
 
+<<<<<<< HEAD
                 body {{
                     margin: 0;
                     padding: 30px;
                     background: #061426;
                     color: #ffffff;
+=======
+
+                body {{
+
+                    margin: 0;
+
+                    padding: 30px;
+
+                    background: #061426;
+
+                    color: #ffffff;
+
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
                     font-family:
                         Arial,
                         Helvetica,
                         sans-serif;
+<<<<<<< HEAD
                 }}
 
                 .container {{
@@ -1324,6 +1612,167 @@ def history():
                 .risk-low {{
                     color: #35e58a;
                     font-weight: bold;
+=======
+
+                }}
+
+
+                .container {{
+
+                    max-width: 1400px;
+
+                    margin: auto;
+
+                }}
+
+
+                h1 {{
+
+                    text-align: center;
+
+                    color: #2495ff;
+
+                    margin-bottom: 25px;
+
+                }}
+
+
+                .back-button {{
+
+                    display: block;
+
+                    width: fit-content;
+
+                    margin: 0 auto 30px auto;
+
+                    padding: 12px 24px;
+
+                    background: #2495ff;
+
+                    color: white;
+
+                    text-decoration: none;
+
+                    border-radius: 7px;
+
+                    font-weight: bold;
+
+                }}
+
+
+                .back-button:hover {{
+
+                    background: #147ddd;
+
+                }}
+
+
+                .table-container {{
+
+                    width: 100%;
+
+                    overflow-x: auto;
+
+                    background: #0c1d33;
+
+                    border: 1px solid #24527a;
+
+                    border-radius: 10px;
+
+                    padding: 10px;
+
+                }}
+
+
+                table {{
+
+                    width: 100%;
+
+                    border-collapse: collapse;
+
+                    min-width: 1050px;
+
+                }}
+
+
+                th {{
+
+                    background: #12375d;
+
+                    color: #38a1ff;
+
+                    padding: 15px 12px;
+
+                    border: 1px solid #24527a;
+
+                    text-align: center;
+
+                    white-space: nowrap;
+
+                }}
+
+
+                td {{
+
+                    padding: 13px 12px;
+
+                    border: 1px solid #1d3d5d;
+
+                    text-align: center;
+
+                    white-space: nowrap;
+
+                }}
+
+
+                tr:nth-child(even) {{
+
+                    background: #0a192b;
+
+                }}
+
+
+                tr:hover {{
+
+                    background: #102b47;
+
+                }}
+
+
+                .risk-high {{
+
+                    color: #ff5252;
+
+                    font-weight: bold;
+
+                }}
+
+
+                .risk-medium {{
+
+                    color: #ffc107;
+
+                    font-weight: bold;
+
+                }}
+
+
+                .risk-low {{
+
+                    color: #35e58a;
+
+                    font-weight: bold;
+
+                }}
+
+
+                .empty {{
+
+                    padding: 30px;
+
+                    text-align: center;
+
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
                 }}
 
             </style>
@@ -1336,8 +1785,12 @@ def history():
             <div class="container">
 
                 <h1>
+<<<<<<< HEAD
                     Cloud Intrusion Detection -
                     Scan History
+=======
+                    Cloud Intrusion Detection - Scan History
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
                 </h1>
 
 
@@ -1395,7 +1848,10 @@ def history():
         </body>
 
         </html>
+<<<<<<< HEAD
 
+=======
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         """
 
 
@@ -1411,7 +1867,10 @@ def history():
 
 
         return f"""
+<<<<<<< HEAD
 
+=======
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         <h2>
             Database Error
         </h2>
@@ -1419,7 +1878,10 @@ def history():
         <p>
             {str(error)}
         </p>
+<<<<<<< HEAD
 
+=======
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         """, 500
 
 
@@ -1442,12 +1904,18 @@ if __name__ == "__main__":
 
 
     port = int(
+<<<<<<< HEAD
 
+=======
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
         os.environ.get(
             "PORT",
             7860
         )
+<<<<<<< HEAD
 
+=======
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
     )
 
 
@@ -1457,4 +1925,8 @@ if __name__ == "__main__":
 
         port=port
 
+<<<<<<< HEAD
     )
+=======
+    )
+>>>>>>> ee66edaf6ec82987e03ad1eb605018d5572d8017
