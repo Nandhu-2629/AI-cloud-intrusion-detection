@@ -226,8 +226,10 @@ def save_request(response):
 def save_request(response):
 
     try:
+                # Ignore internal dashboard/API requests
         if is_internal_monitoring_path(request.path):
             return response
+            
         source_ip = request.headers.get(
             "X-Forwarded-For",
             request.remote_addr
