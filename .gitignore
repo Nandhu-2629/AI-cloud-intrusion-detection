@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.env
+*.env
+app_IST_fixed.py

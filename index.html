@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        AI-Based Cloud Intrusion Detection System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        ☁️ CloudSecure AI
+    </div>
+
+    <div class="status">
+
+        <span class="dot"></span>
+
+        System Online
+
+    </div>
+
+</header>
+
+
+<main>
+
+
+<!-- ==================================================
+     HERO SECTION
+================================================== -->
+
+<section class="hero">
+
+    <div>
+
+        <p class="tag">
+            CLOUD SECURITY • AI MONITORING
+        </p>
+
+
+        <h1>
+
+            AI-Based Cloud<br>
+            Intrusion Detection System
+
+        </h1>
+
+
+        <p class="description">
+
+            An intelligent cloud security system that
+            monitors network activity and detects
+            suspicious or malicious behavior using
+            AI-based analysis.
+
+        </p>
+
+
+        <!-- Moves to scanner -->
+
+        <button
+            type="button"
+            onclick="openSecurityScanner()"
+        >
+
+            🔍 Start Security Scan
+
+        </button>
+
+    </div>
+
+
+    <div class="cloud-icon">
+
+        ☁️
+
+        <div>
+
+            AI CLOUD<br>
+            SECURITY
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     STATISTICS
+================================================== -->
+
+<section class="stats">
+
+
+    <!-- NETWORK TRAFFIC -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            📡
+        </div>
+
+        <h3>
+            Network Traffic
+        </h3>
+
+        <strong id="traffic">
+            0
+        </strong>
+
+        <p>
+            Requests monitored
+        </p>
+
+    </div>
+
+
+    <!-- THREATS -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🛡️
+        </div>
+
+        <h3>
+            Threats Detected
+        </h3>
+
+        <strong id="threats">
+            0
+        </strong>
+
+        <p>
+            Suspicious activities
+        </p>
+
+    </div>
+
+
+    <!-- AI DETECTION -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🤖
+        </div>
+
+        <h3>
+            AI Detection
+        </h3>
+
+        <strong id="accuracy">
+            --%
+        </strong>
+
+        <p>
+            Detection accuracy
+        </p>
+
+    </div>
+
+
+    <!-- CLOUD STATUS -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            ☁️
+        </div>
+
+        <h3>
+            Cloud Status
+        </h3>
+
+        <strong class="safe">
+            Secure
+        </strong>
+
+        <p>
+            Infrastructure protected
+        </p>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ==================================================
+     DASHBOARD
+================================================== -->
+
+<section class="dashboard">
+
+
+    <!-- ==================================================
+         LIVE NETWORK ACTIVITY
+    ================================================== -->
+
+    <div class="panel">
+
+        <div class="panel-title">
+
+            <h2>
+                Live Network Activity
+            </h2>
+
+            <span class="live">
+                ● LIVE
+            </span>
+
+        </div>
+
+
+        <!--
+            REAL TRAFFIC IS INSERTED HERE
+            FROM /traffic-logs
+        -->
+
+        <div
+            class="activity"
+            id="activityContainer"
+        >
+
+            <div class="activity-row">
+
+                <span>
+                    Loading...
+                </span>
+
+                <span>
+                    ---
+                </span>
+
+                <span>
+                    Waiting for traffic
+                </span>
+
+                <span class="normal">
+                    ---
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         AI THREAT ANALYSIS
+    ================================================== -->
+
+    <div class="panel">
+
+        <h2>
+            AI Threat Analysis
+        </h2>
+
+
+        <!-- CURRENT ATTACK -->
+
+        <div class="threat">
+
+            <div class="threat-top">
+
+                <span id="threatTitle">
+
+                    ⚠️ Awaiting AI Scan
+
+                </span>
+
+                <span
+                    id="threatLevel"
+                    class="medium"
+                >
+
+                    WAITING
+
+                </span>
+
+            </div>
+
+
+            <p id="threatDescription">
+
+                Run AI Threat Detection to analyze
+                the current network activity.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- AI CLASSIFICATION -->
+
+        <div class="threat">
+
+            <div class="threat-top">
+
+                <span>
+
+                    🤖 AI Classification
+
+                </span>
+
+                <span
+                    id="classificationLevel"
+                    class="medium"
+                >
+
+                    WAITING
+
+                </span>
+
+            </div>
+
+
+            <p id="classificationDescription">
+
+                No AI classification available yet.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- SECURITY RESPONSE -->
+
+        <div class="threat safe-threat">
+
+            <div class="threat-top">
+
+                <span>
+
+                    🛡️ Security Response
+
+                </span>
+
+                <span
+                    id="responseLevel"
+                    class="low"
+                >
+
+                    READY
+
+                </span>
+
+            </div>
+
+
+            <p id="responseDescription">
+
+                System is ready to analyze incoming
+                network activity.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ==================================================
+     ARCHITECTURE
+================================================== -->
+
+<section class="architecture">
+
+
+    <h2>
+        Cloud Intrusion Detection Architecture
+    </h2>
+
+
+    <div class="architecture-flow">
+
+
+        <div class="architecture-box">
+
+            <span>
+                🌐
+            </span>
+
+            <b>
+                Internet
+            </b>
+
+            <small>
+                Network Traffic
+            </small>
+
+        </div>
+
+
+        <div class="arrow">
+            →
+        </div>
+
+
+        <div class="architecture-box">
+
+            <span>
+                ☁️
+            </span>
+
+            <b>
+                Cloud Infrastructure
+            </b>
+
+            <small>
+                Cloud Resources
+            </small>
+
+        </div>
+
+
+        <div class="arrow">
+            →
+        </div>
+
+
+        <div class="architecture-box">
+
+            <span>
+                📊
+            </span>
+
+            <b>
+                Traffic Monitoring
+            </b>
+
+            <small>
+                Log Collection
+            </small>
+
+        </div>
+
+
+        <div class="arrow">
+            →
+        </div>
+
+
+        <div class="architecture-box ai-box">
+
+            <span>
+                🤖
+            </span>
+
+            <b>
+                AI Detection
+            </b>
+
+            <small>
+                Threat Classification
+            </small>
+
+        </div>
+
+
+        <div class="arrow">
+            →
+        </div>
+
+
+        <div class="architecture-box">
+
+            <span>
+                🛡️
+            </span>
+
+            <b>
+                Security Response
+            </b>
+
+            <small>
+                Alert / Block
+            </small>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ==================================================
+     SECURITY SCANNER
+================================================== -->
+
+<section
+    class="scan-section"
+    id="securityScanner"
+>
+
+
+    <h2>
+        Security Scanner
+    </h2>
+
+
+    <p id="scanMessage">
+
+        Click "Run AI Threat Detection"
+        to analyze current cloud traffic.
+
+    </p>
+
+
+    <!-- ACTUAL AI SCAN BUTTON -->
+
+    <button
+        type="button"
+        onclick="runAIThreatDetection()"
+    >
+
+        🤖 Run AI Threat Detection
+
+    </button>
+
+
+    <!-- HISTORY BUTTON -->
+
+    <button
+        type="button"
+        onclick="viewHistory()"
+    >
+
+        📋 View Scan History
+
+    </button>
+
+
+    <div class="progress-container">
+
+        <div id="progress"></div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         SCAN REPORT
+    ================================================== -->
+
+    <div
+        id="scanReport"
+        style="
+        display:none;
+        margin-top:25px;
+        padding:20px;
+        border-radius:12px;
+        background:#101f35;
+        border:1px solid #24527a;
+        "
+    >
+
+
+        <h3>
+            🛡️ Security Scan Report
+        </h3>
+
+
+        <p>
+
+            <strong>
+                Scan Status:
+            </strong>
+
+            <span id="reportStatus">
+                Completed
+            </span>
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Attack Detected:
+            </strong>
+
+            <span id="reportAttack">
+                None
+            </span>
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Network Traffic Analyzed:
+            </strong>
+
+            <span id="reportTraffic">
+                0
+            </span>
+
+            requests
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Threats Detected:
+            </strong>
+
+            <span id="reportThreats">
+                0
+            </span>
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Risk Level:
+            </strong>
+
+            <span id="reportRisk">
+                LOW
+            </span>
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                AI Analysis:
+            </strong>
+
+            <span id="reportPrediction">
+
+                AI analysis completed successfully.
+
+            </span>
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Recommended Action:
+            </strong>
+
+            <span id="reportAction">
+
+                Continue monitoring the cloud environment.
+
+            </span>
+
+        </p>
+
+
+    </div>
+
+
+</section>
+
+
+</main>
+
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer>
+
+    <p>
+        AI-Based Cloud Intrusion Detection System
+    </p>
+
+    <p>
+        Cloud Computing Project •
+        AI-Powered Security Monitoring
+    </p>
+
+</footer>
+
+
+
+<script>
+
+
+// ==================================================
+// START SECURITY SCAN BUTTON
+// ==================================================
+
+function openSecurityScanner() {
+
+    const scanner =
+        document.getElementById(
+            "securityScanner"
+        );
+
+
+    if (scanner) {
+
+        scanner.scrollIntoView({
+            behavior: "smooth"
+        });
+
+    }
+
+
+    const message =
+        document.getElementById(
+            "scanMessage"
+        );
+
+
+    if (message) {
+
+        message.innerHTML =
+            'Ready. Click "Run AI Threat Detection" to analyze cloud traffic.';
+
+    }
+
+}
+
+
+
+// ==================================================
+// UPDATE LIVE TRAFFIC COUNT
+// ==================================================
+
+async function loadTrafficStatistics() {
+
+    const trafficElement =
+        document.getElementById(
+            "traffic"
+        );
+
+
+    if (!trafficElement) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch("/traffic");
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Traffic API error"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        // ------------------------------------------
+        // REAL CURRENT TRAFFIC COUNT
+        // ------------------------------------------
+
+        trafficElement.textContent =
+            data.traffic ?? 0;
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unable to load traffic statistics:",
+            error
+        );
+
+    }
+
+}
+
+
+
+// ==================================================
+// LOAD REAL NETWORK ACTIVITY
+// ==================================================
+
+async function loadRealTrafficLogs() {
+
+    const container =
+        document.getElementById(
+            "activityContainer"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/traffic-logs"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Traffic logs API error"
+            );
+
+        }
+
+
+        const logs =
+            await response.json();
+
+
+        if (!Array.isArray(logs)) {
+
+            throw new Error(
+                "Invalid traffic log response"
+            );
+
+        }
+
+
+        // ------------------------------------------
+        // REMOVE INTERNAL DASHBOARD REQUESTS
+        // ------------------------------------------
+
+        const visibleLogs =
+            logs.filter(function(log) {
+
+                const path =
+                    log.path || "";
+
+
+                return ![
+                    "/traffic",
+                    "/traffic-logs",
+                    "/scan",
+                    "/history",
+                    "/style.css",
+                    "/favicon.ico"
+                ].includes(path);
+
+            });
+
+
+        // ------------------------------------------
+        // NO USER TRAFFIC
+        // ------------------------------------------
+
+        if (visibleLogs.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="activity-row">
+
+                    <span>
+                        ---
+                    </span>
+
+                    <span>
+                        ---
+                    </span>
+
+                    <span>
+                        No recent traffic
+                    </span>
+
+                    <span class="normal">
+                        Normal
+                    </span>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        // ------------------------------------------
+        // CLEAR OLD DATA
+        // ------------------------------------------
+
+        container.innerHTML = "";
+
+
+        // ------------------------------------------
+        // DISPLAY REAL REQUESTS
+        // ------------------------------------------
+
+        visibleLogs.forEach(
+            function(log) {
+
+
+                const row =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                row.className =
+                    "activity-row";
+
+
+                // TIME
+
+                const time =
+                    document.createElement(
+                        "span"
+                    );
+
+                time.textContent =
+                    log.time || "---";
+
+
+                // IP
+
+                const ip =
+                    document.createElement(
+                        "span"
+                    );
+
+                ip.textContent =
+                    log.ip || "---";
+
+
+                // REQUEST
+
+                const request =
+                    document.createElement(
+                        "span"
+                    );
+
+                request.textContent =
+                    (
+                        (log.method || "GET")
+                        + " "
+                        + (log.path || "/")
+                    );
+
+
+                // STATUS
+
+                const status =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                const statusValue =
+                    log.status || "Normal";
+
+
+                status.textContent =
+                    statusValue;
+
+
+                if (
+                    statusValue ===
+                    "Threat"
+                ) {
+
+                    status.className =
+                        "danger";
+
+                }
+
+                else if (
+                    statusValue ===
+                    "Suspicious"
+                ) {
+
+                    status.className =
+                        "warning";
+
+                }
+
+                else {
+
+                    status.className =
+                        "normal";
+
+                }
+
+
+                row.appendChild(time);
+
+                row.appendChild(ip);
+
+                row.appendChild(request);
+
+                row.appendChild(status);
+
+
+                container.appendChild(row);
+
+            }
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unable to load real traffic logs:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="activity-row">
+
+                <span>
+                    ---
+                </span>
+
+                <span>
+                    ---
+                </span>
+
+                <span>
+                    Traffic monitoring error
+                </span>
+
+                <span class="danger">
+                    Error
+                </span>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+// ==================================================
+// UPDATE AI THREAT ANALYSIS
+// ==================================================
+
+function updateThreatAnalysis(data) {
+
+
+    const title =
+        document.getElementById(
+            "threatTitle"
+        );
+
+
+    const level =
+        document.getElementById(
+            "threatLevel"
+        );
+
+
+    const description =
+        document.getElementById(
+            "threatDescription"
+        );
+
+
+    const classificationLevel =
+        document.getElementById(
+            "classificationLevel"
+        );
+
+
+    const classificationDescription =
+        document.getElementById(
+            "classificationDescription"
+        );
+
+
+    const responseLevel =
+        document.getElementById(
+            "responseLevel"
+        );
+
+
+    const responseDescription =
+        document.getElementById(
+            "responseDescription"
+        );
+
+
+    // ------------------------------------------
+    // ATTACK
+    // ------------------------------------------
+
+    title.textContent =
+        "⚠️ " + (
+            data.attack ||
+            "No Threat Detected"
+        );
+
+
+    level.textContent =
+        data.risk ||
+        "LOW";
+
+
+    level.className =
+        "";
+
+
+    if (
+        data.risk === "HIGH"
+    ) {
+
+        level.classList.add(
+            "high"
+        );
+
+    }
+
+    else if (
+        data.risk === "MEDIUM"
+    ) {
+
+        level.classList.add(
+            "medium"
+        );
+
+    }
+
+    else {
+
+        level.classList.add(
+            "low"
+        );
+
+    }
+
+
+    description.textContent =
+        data.prediction ||
+        "AI analysis completed.";
+
+
+    // ------------------------------------------
+    // CLASSIFICATION
+    // ------------------------------------------
+
+    classificationLevel.textContent =
+        (
+            data.confidence ??
+            0
+        ) + "%";
+
+
+    classificationLevel.className =
+        "medium";
+
+
+    classificationDescription.textContent =
+        "AI classification: "
+        + (
+            data.prediction ||
+            "Unknown"
+        );
+
+
+    // ------------------------------------------
+    // RESPONSE
+    // ------------------------------------------
+
+    responseLevel.textContent =
+        data.risk === "HIGH"
+            ? "ALERT"
+            : data.risk === "MEDIUM"
+                ? "MONITOR"
+                : "SECURE";
+
+
+    responseLevel.className =
+        data.risk === "HIGH"
+            ? "high"
+            : data.risk === "MEDIUM"
+                ? "medium"
+                : "low";
+
+
+    responseDescription.textContent =
+        data.action ||
+        "Continue monitoring the cloud environment.";
+
+}
+
+
+
+// ==================================================
+// RUN AI THREAT DETECTION
+// ==================================================
+
+function runAIThreatDetection() {
+
+
+    const progress =
+        document.getElementById(
+            "progress"
+        );
+
+
+    const message =
+        document.getElementById(
+            "scanMessage"
+        );
+
+
+    const threats =
+        document.getElementById(
+            "threats"
+        );
+
+
+    const traffic =
+        document.getElementById(
+            "traffic"
+        );
+
+
+    const accuracy =
+        document.getElementById(
+            "accuracy"
+        );
+
+
+    const scanReport =
+        document.getElementById(
+            "scanReport"
+        );
+
+
+    const reportTraffic =
+        document.getElementById(
+            "reportTraffic"
+        );
+
+
+    const reportThreats =
+        document.getElementById(
+            "reportThreats"
+        );
+
+
+    const reportAttack =
+        document.getElementById(
+            "reportAttack"
+        );
+
+
+    const reportRisk =
+        document.getElementById(
+            "reportRisk"
+        );
+
+
+    const reportPrediction =
+        document.getElementById(
+            "reportPrediction"
+        );
+
+
+    const reportAction =
+        document.getElementById(
+            "reportAction"
+        );
+
+
+    const reportStatus =
+        document.getElementById(
+            "reportStatus"
+        );
+
+
+    // ------------------------------------------
+    // START SCAN
+    // ------------------------------------------
+
+    message.innerHTML =
+        "🤖 AI is analyzing cloud network traffic...";
+
+
+    progress.style.width =
+        "0%";
+
+
+    scanReport.style.display =
+        "none";
+
+
+    let value = 0;
+
+
+    const scan =
+        setInterval(
+            function() {
+
+
+                value += 10;
+
+
+                progress.style.width =
+                    value + "%";
+
+
+                if (
+                    value >= 100
+                ) {
+
+
+                    clearInterval(scan);
+
+
+                    // ----------------------------------
+                    // CALL FLASK /scan
+                    // ----------------------------------
+
+                    fetch("/scan")
+
+
+                        .then(
+                            function(response) {
+
+
+                                if (
+                                    !response.ok
+                                ) {
+
+                                    throw new Error(
+                                        "Server error"
+                                    );
+
+                                }
+
+
+                                return response.json();
+
+                            }
+                        )
+
+
+                        .then(
+                            function(data) {
+
+
+                                // --------------------------------
+                                // UPDATE DASHBOARD
+                                // --------------------------------
+
+                                traffic.textContent =
+                                    data.traffic ?? 0;
+
+
+                                threats.textContent =
+                                    data.threats ?? 0;
+
+
+                                accuracy.textContent =
+                                    (
+                                        data.accuracy ??
+                                        0
+                                    ) + "%";
+
+
+                                // --------------------------------
+                                // UPDATE MESSAGE
+                                // --------------------------------
+
+                                message.textContent =
+                                    "✅ Scan completed. AI detected: "
+                                    + (
+                                        data.attack ||
+                                        "No Threat"
+                                    )
+                                    + ".";
+
+
+                                // --------------------------------
+                                // UPDATE REPORT
+                                // --------------------------------
+
+                                reportStatus.textContent =
+                                    "Completed";
+
+
+                                reportTraffic.textContent =
+                                    data.traffic ?? 0;
+
+
+                                reportThreats.textContent =
+                                    data.threats ?? 0;
+
+
+                                reportAttack.textContent =
+                                    data.attack ||
+                                    "None";
+
+
+                                reportRisk.textContent =
+                                    data.risk ||
+                                    "LOW";
+
+
+                                reportPrediction.textContent =
+                                    data.prediction ||
+                                    "AI analysis completed successfully.";
+
+
+                                reportAction.textContent =
+                                    data.action ||
+                                    "Continue monitoring the cloud environment.";
+
+
+                                // --------------------------------
+                                // UPDATE THREAT ANALYSIS
+                                // --------------------------------
+
+                                updateThreatAnalysis(
+                                    data
+                                );
+
+
+                                // --------------------------------
+                                // SHOW REPORT
+                                // --------------------------------
+
+                                scanReport.style.display =
+                                    "block";
+
+
+                                // Refresh traffic
+                                // after scan
+
+                                loadRealTrafficLogs();
+
+                                loadTrafficStatistics();
+
+
+                            }
+                        )
+
+
+                        .catch(
+                            function(error) {
+
+
+                                console.error(
+                                    error
+                                );
+
+
+                                message.textContent =
+                                    "❌ Unable to connect to AI security backend.";
+
+
+                                reportStatus.textContent =
+                                    "Failed";
+
+
+                                scanReport.style.display =
+                                    "block";
+
+
+                            }
+                        );
+
+
+                }
+
+
+            },
+            100
+        );
+
+}
+
+
+
+// ==================================================
+// VIEW SCAN HISTORY
+// ==================================================
+
+function viewHistory() {
+
+    window.location.href =
+        "/history";
+
+}
+
+
+
+// ==================================================
+// INITIAL DASHBOARD LOAD
+// ==================================================
+
+// Load real traffic immediately
+
+loadTrafficStatistics();
+
+loadRealTrafficLogs();
+
+
+// ==================================================
+// CONTINUOUS LIVE MONITORING
+// ==================================================
+
+// Refresh traffic count
+
+setInterval(
+    loadTrafficStatistics,
+    5000
+);
+
+
+// Refresh live activity
+
+setInterval(
+    loadRealTrafficLogs,
+    5000
+);
+
+
+</script>
+
+
+</body>
+
+</html>
