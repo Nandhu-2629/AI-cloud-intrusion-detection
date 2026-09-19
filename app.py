@@ -565,9 +565,22 @@ def calculate_traffic_features():
     )
 
 
+    # Current live threat count based on suspicious
+    # request paths in the same 60-second window.
+    live_threats = sum(
+        1
+        for log in recent_logs
+        if any(
+            suspicious in log["path"].lower()
+            for suspicious in suspicious_paths
+        )
+    )
+
     return {
 
         "traffic": int(traffic),
+
+        "threats": int(live_threats),
 
         "failed_logins": int(
             failed_logins
