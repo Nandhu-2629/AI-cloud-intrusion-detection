@@ -647,34 +647,56 @@ def scan():
     # AI / ML prediction
     # ----------------------------------------------
 
-    result = detect_intrusion(
+    # If there is no recent traffic, do not send an
+    # artificial all-zero sample to the ML model.
+    # The model may classify an all-zero sample as
+    # suspicious even though there is nothing to analyze.
+    if features["count"] == 0:
 
-        features["src_bytes"],
+        result = {
+            "prediction": "Normal",
+            "risk": "LOW",
+            "confidence": 0.0,
+            "accuracy": 98.33,
+            "precision": 98.33,
+            "recall": 98.33,
+            "f1": 98.29
+        }
 
-        features["dst_bytes"],
+    else:
 
-        features["count"],
+        result = detect_intrusion(
 
-        features["srv_count"],
+            features["src_bytes"],
 
-        features["num_failed_logins"],
+            features["dst_bytes"],
 
-        features["num_compromised"],
+            features["count"],
 
-        features["serror_rate"],
+            features["srv_count"],
 
-        features["rerror_rate"],
+            features["num_failed_logins"],
 
-        features["same_srv_rate"]
+            features["num_compromised"],
 
-    )
+            features["serror_rate"],
+
+            features["rerror_rate"],
+
+            features["same_srv_rate"]
+
+        )
 
 
     # ==================================================
     # DETERMINE ATTACK TYPE
     # ==================================================
 
-    if features["failed_logins"] >= 7:
+    if features["count"] == 0:
+
+        attack = "No Recent Traffic"
+
+    elif features["failed_logins"] >= 7:
 
         attack = (
             "Brute Force Attack"
@@ -908,6 +930,9 @@ def scan():
 
         "traffic":
             features["traffic"],
+
+        "live_threats":
+            features.get("threats", 0),
 
         "failed_logins":
             features["failed_logins"],
