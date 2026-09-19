@@ -23,6 +23,15 @@ request_counts = defaultdict(int)
 
 failed_request_counts = defaultdict(int)
 
+def is_internal_monitoring_path(path):
+    return path in [
+        "/traffic",
+        "/traffic-logs",
+        "/scan",
+        "/history",
+        "/style.css",
+        "/favicon.ico"
+    ]
 
 # ==================================================
 # DATABASE CONNECTION
@@ -148,17 +157,15 @@ def initialize_database():
 # ==================================================
 
 @app.before_request
-def record_request():
+def save_request(response):
 
-    # Don't record static files
-    # because they create unnecessary traffic.
+    try:
 
-    if request.path.startswith(
-        "/style.css"
-    ):
+    # Ignore internal dashboard/API requests
+    # so they are not counted as user/network traffic.
 
+    if is_internal_monitoring_path(request.path):
         return
-
 
     source_ip = request.headers.get(
         "X-Forwarded-For",
@@ -166,12 +173,9 @@ def record_request():
     )
 
     if source_ip and "," in source_ip:
-
         source_ip = source_ip.split(",")[0].strip()
 
-
     method = request.method
-
     path = request.path
 
     user_agent = request.headers.get(
@@ -179,38 +183,20 @@ def record_request():
         "Unknown"
     )
 
-
-    # Approximate request size
-
     request_size = request.content_length or 0
 
-
-    # ----------------------------------------------
-    # COUNT REQUESTS
-    # ----------------------------------------------
-
+    # Count request
     request_counts[source_ip] += 1
 
-
-    # ----------------------------------------------
-    # COUNT FAILED REQUESTS
-    # ----------------------------------------------
-
+    # Count failed login-like requests
     if path in [
         "/login",
         "/admin",
         "/wp-login.php"
     ]:
+        failed_request_counts[source_ip] += 1
 
-        failed_request_counts[
-            source_ip
-        ] += 1
-
-
-    # ----------------------------------------------
-    # STORE IN MEMORY
-    # ----------------------------------------------
-
+    # Store request in memory
     traffic_logs.append({
 
         "source_ip": source_ip,
@@ -227,13 +213,10 @@ def record_request():
 
     })
 
-
     # Keep only the latest 1000 requests
-
     if len(traffic_logs) > 1000:
-
         del traffic_logs[:-1000]
-
+   
 
 # ==================================================
 # RECORD RESPONSE STATUS
@@ -243,7 +226,8 @@ def record_request():
 def save_request(response):
 
     try:
-
+        if is_internal_monitoring_path(request.path):
+            return response
         source_ip = request.headers.get(
             "X-Forwarded-For",
             request.remote_addr
