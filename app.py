@@ -157,9 +157,7 @@ def initialize_database():
 # ==================================================
 
 @app.before_request
-def save_request(response):
-
-    try:
+def record_request():
 
     # Ignore internal dashboard/API requests
     # so they are not counted as user/network traffic.
@@ -216,17 +214,18 @@ def save_request(response):
     # Keep only the latest 1000 requests
     if len(traffic_logs) > 1000:
         del traffic_logs[:-1000]
-   
+
 
 # ==================================================
 # RECORD RESPONSE STATUS
 # ==================================================
 
 @app.after_request
-def save_request(response):
+def save_response_to_database(response):
 
     try:
 
+        # Ignore internal dashboard/API requests
         if is_internal_monitoring_path(request.path):
             return response
 
