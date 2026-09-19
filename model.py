@@ -399,6 +399,48 @@ def detect_intrusion(
     detection_reason = "Random Forest classification"
 
 
+    # ==================================================
+    # NORMAL LIVE-TRAFFIC GUARD
+    # ==================================================
+    #
+    # NSL-KDD is a benchmark dataset and the engineered
+    # application-level feature vector for a small number
+    # of ordinary HTTP requests can be outside the
+    # distribution seen during training. In that case,
+    # the Random Forest can produce a false "Suspicious"
+    # label even when the current live request indicators
+    # show no suspicious activity.
+    #
+    # For the deployed application, ordinary traffic with
+    # no failed-login, suspicious-path/resource, or high-rate
+    # indicators is therefore treated as Normal.
+    #
+    # This keeps the model as the AI classifier while the
+    # live security indicators act as the real-time layer.
+
+    ordinary_live_traffic = (
+
+        num_failed_logins == 0
+
+        and num_compromised == 0
+
+        and count < 100
+
+        and serror_rate < 0.5
+
+        and rerror_rate < 0.5
+
+    )
+
+    if ordinary_live_traffic:
+
+        prediction_label = "Normal"
+
+        detection_reason = (
+            "No suspicious real-time traffic indicators detected"
+        )
+
+
     # --------------------------------------------------
     # BRUTE FORCE INDICATOR
     # --------------------------------------------------
